@@ -1,7 +1,7 @@
 import NodeUI from './ui/nodeui'
 import * as THREE from 'three'
 import Dat from 'dat.gui'
-import {OrbitControls} from 'three/examples/jsm/controls/OrbitControls';
+import {OrbitControls} from 'three/examples/jsm/controls/OrbitControls'
 import * as Stats from 'stats.js'
 
 
@@ -36,7 +36,7 @@ export default class Stage{
         this.renderer.setPixelRatio(window.devicePixelRatio)
         this.renderer.shadowMap.enabled = true
         this.renderer.shadowMap.type = THREE.SpotLightShadow
-        this.renderer.setClearColor(0x000000, 1);  
+        this.renderer.setClearColor(0x000000, 1)
         this.renderer.physicallyCorrectLights = true
         this.renderer.toneMapping = THREE.ACESFilmicToneMapping
         this.renderer.toneMappingExposure = 1.25
@@ -51,17 +51,16 @@ export default class Stage{
             near : 1,
             far  : 1000
         }
-        this.camera = new THREE.PerspectiveCamera(20, window.innerWidth / window.innerHeight, 1);
-        this.camera.position.set(0, 0, 100);
-        const look = new THREE.Vector3(0, 0, 0);
-        this.camera.lookAt(look);
-        this.scene.add(this.camera);
+        this.camera = new THREE.PerspectiveCamera(20, window.innerWidth / window.innerHeight, 1)
+        this.camera.position.set(0, 0, 100)
+        const look = new THREE.Vector3(0, 0, 0)
+        this.camera.lookAt(look)
+        this.scene.add(this.camera)
         const cameraGUI = this.gui.addFolder('Camera')
         cameraGUI.add(this.camera, 'fov').onChange(()=>{this.camera.updateMatrix()})
         cameraGUI.add(this.camera, 'near').onChange(()=>{this.camera.updateMatrix()})
         cameraGUI.add(this.camera, 'far').onChange(()=>{this.camera.updateMatrix()})
         cameraGUI.close()
-
 
     }
 
@@ -72,6 +71,7 @@ export default class Stage{
 
     initEventListener(){
         this.control = new OrbitControls(this.camera, this.renderer.domElement)
+        this.control.enableRotate = false
         const controlGUI = this.gui.addFolder('Controls')
         controlGUI.add(this.control, 'enableRotate')
         controlGUI.add(this.control, 'rotateSpeed')
@@ -100,19 +100,19 @@ export default class Stage{
     
 
     getMesh(geometry, material) {
-        const mesh = new THREE.Mesh(geometry, material);
+        const mesh = new THREE.Mesh(geometry, material)
 
-        mesh.castShadow = true;
-        mesh.receiveShadow = true;
+        mesh.castShadow = true
+        mesh.receiveShadow = true
 
-        return mesh;
+        return mesh
     }
 
     animate(){
         this.stats.begin()
 
-        if(this.control) this.control.update();
-        this.renderer.render(this.scene, this.camera);
+        if(this.control) this.control.update()
+        this.renderer.render(this.scene, this.camera)
 
         this.stats.end()
         requestAnimationFrame(this.animate.bind(this))
